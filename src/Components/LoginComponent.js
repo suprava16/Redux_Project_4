@@ -3,8 +3,10 @@ import { Button, TextField, Grid } from "@mui/material"
 import { useDispatch, useSelector } from "react-redux"
 import { setEmail, setPassword ,addData} from "../Actions/LoginAction"
 function LoginComponent() {
+  const token=localStorage.getItem("user_token")
+  
   const dispatch = useDispatch();
-
+console.log(token)
   //Getting reducer state variables
   const myData = useSelector((store) => store.LoginReducer)
   console.log(myData)
@@ -48,3 +50,12 @@ function LoginComponent() {
 export default LoginComponent;
 
 // component->trigger any event->action(return object)->reducer(excuter proper switch case value)->combine reducers->create store->index.js(import Store and Provider)->use Provider and pass store value as props->by using useSelector hook u can access your store value 
+
+// localStorage.getItem("user_token")!==null ?
+// <Link to="">1</Link>
+// <Link to="">1</Link>
+// <Link to="">1</Link>
+// :
+// <Link to="">1</Link>
+// <Link to="">1</Link>
+// <Link to="">1</Link>

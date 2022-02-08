@@ -14,14 +14,22 @@ export function setPassword(password){
 }
 
 export function addData(email,password){
-//  return ()=>{
-//    fetch("",{
-//      method:"post",
-//      headers:{},
-//      body:JSON.stringify{
-//        email:email,
-//        password:password
-//      }
-//    })
-//  }
+ return ()=>{
+   fetch("https://reqres.in/api/login",{
+     method:"post",
+     headers:{
+       "Accept":"application/json",
+        "Content-Type":"application/json"
+     },
+     body:JSON.stringify({
+       email:email,
+       password:password
+     })
+   })
+   .then((response)=>(response.json()))
+   .then((result)=>{
+     console.log(result)
+     localStorage.setItem("user_token",result.token)
+   })
+ }
 }
