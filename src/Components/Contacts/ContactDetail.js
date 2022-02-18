@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import {useSelector,useDispatch} from "react-redux"
 import FolderIcon from '@mui/icons-material/Folder';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -8,10 +8,30 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import {ListItemText,Grid} from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
+import {afterDelete} from "../../Actions/ContactAction"
 function ContactDetail() {
   const dispatch=useDispatch()
   const myData=useSelector((state)=>state.ContactReducer)
+  //using localstorage
+  useEffect(()=>{
+    const list=JSON.parse(localStorage.getItem("contact-list"))
+    if(list){
+      dispatch(afterDelete(list))
+    }
+  },[])
+  //set data in localstorage
+  useEffect(()=>{
+    localStorage.setItem("contact-list",JSON.stringify(myData.contacts))
+  })
 
+  //delete contacts
+  const handleDelete=(index)=>{
+    const new_list=myData.contacts.filter((single)=>{
+      return myData.contacts.indexOf(single)!==index;
+      
+    })
+    dispatch(afterDelete(new_list))
+  }
   console.log(myData.contacts)
   return (
   <div>
@@ -26,7 +46,7 @@ function ContactDetail() {
                 <ListItem
                   secondaryAction={
                     <IconButton edge="end" aria-label="delete">
-                      <DeleteIcon />
+                      <DeleteIcon  onClick={()=>{handleDelete(i)}}/>
                     </IconButton>
                   }
                 >
